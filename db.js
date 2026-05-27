@@ -6,6 +6,7 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
+  ssl: false  // ← add this for cPanel PostgreSQL
 });
 
 pool.connect(async (err, client, release) => {
@@ -15,7 +16,6 @@ pool.connect(async (err, client, release) => {
     console.log('Connected to the PostgreSQL database.');
     
     try {
-        // Create tables sequentially
         await client.query(`CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
             username VARCHAR(255) UNIQUE NOT NULL,
