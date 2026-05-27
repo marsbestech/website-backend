@@ -1,5 +1,6 @@
 ---
 deployment:
   tasks:
+    - rm -rf /home/marsbewk/repositories/backend/tmp
     - mkdir -p /home/marsbewk/repositories/backend/tmp
     - touch /home/marsbewk/repositories/backend/tmp/restart.txt
