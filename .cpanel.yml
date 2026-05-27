@@ -1,7 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/marsbewk/repositories/backend
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp -R .env $DEPLOYPATH
-    - mkdir -p $DEPLOYPATH/tmp && touch $DEPLOYPATH/tmp/restart.txt
+    - mkdir -p /home/marsbewk/repositories/backend/tmp
+    - touch /home/marsbewk/repositories/backend/tmp/restart.txt
