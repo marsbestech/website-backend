@@ -18,7 +18,4 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Mount the modular routes at /api
 app.use('/api', apiRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+module.exports = app;
