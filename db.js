@@ -1,12 +1,14 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host:'127.0.0.1',
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  ssl: false  // ← add this for cPanel PostgreSQL
+    user: process.env.DB_USER,
+    host: '127.0.0.1',
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    ssl: {
+        rejectUnauthorized: false  // ← allows self-signed certs on cPanel
+    }
 });
 
 pool.connect(async (err, client, release) => {
@@ -14,7 +16,7 @@ pool.connect(async (err, client, release) => {
         return console.error('Error acquiring client', err.stack);
     }
     console.log('Connected to the PostgreSQL database.');
-    
+
     try {
         await client.query(`CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
