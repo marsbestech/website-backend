@@ -25,4 +25,19 @@ const loginUser = async (username, password) => {
     }
 };
 
-module.exports = { loginUser };
+const registerUser = async (username, password) => {
+    const existing = await db.query(`SELECT id FROM users WHERE username = $1`, [username]);
+    if (existing.rows.length > 0) {
+        throw new Error('Username already exists');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await db.query(
+        `INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username`,
+        [username, hashedPassword]
+    );
+
+    return { message: 'User created successfully', user: result.rows[0] };
+};
+
+module.exports = { loginUser, registerUser };

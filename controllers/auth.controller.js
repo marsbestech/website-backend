@@ -14,4 +14,26 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { login };
+const register = async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
+    }
+
+    if (password.length < 6) {
+        return res.status(400).json({ error: 'Password must be at least 6 characters' });
+    }
+
+    try {
+        const result = await authService.registerUser(username, password);
+        res.status(201).json(result);
+    } catch (err) {
+        if (err.message === 'Username already exists') {
+            return res.status(409).json({ error: err.message });
+        }
+        res.status(500).json({ error: err.message });
+    }
+};
+
+module.exports = { login, register };
