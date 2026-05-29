@@ -1,9 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/marsbewk/website-backend
-    - cd $DEPLOYPATH
-    - npm install --production
-    - rm -rf $DEPLOYPATH/tmp
-    - mkdir -p $DEPLOYPATH/tmp
-    - touch $DEPLOYPATH/tmp/restart.txt
+    - rm -rf /home/marsbewk/website-backend/tmp
+    - mkdir -p /home/marsbewk/website-backend/tmp
+    - touch /home/marsbewk/website-backend/tmp/restart.txt
