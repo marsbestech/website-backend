@@ -35,16 +35,19 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Root health check route
-app.get('/', (req, res) => {
-    res.json({ status: 'ok', message: 'Marsbes Tech API is running' });
-});
-app.get('/version-test', (req, res) => {
-    console.log('Version test endpoint hit');
-    res.json({ status: 'ok', message: 'version updated' });
-});
-// API routes
+// API routes (must come before static/catch-all)
 app.use('/api', apiRoutes);
+
+// Serve React frontend static files from public/
+const frontendPath = path.join(__dirname, 'public');
+app.use(express.static(frontendPath));
+
+// SPA catch-all: for any route not matched by API or a static file,
+// serve index.html so React Router handles navigation client-side.
+// This fixes the 404 on direct URL access / page refresh.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+});
 
 // For local development: listen on PORT
 if (!module.parent) {
