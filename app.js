@@ -6,8 +6,19 @@ const apiRoutes = require('./routes/index');
 
 const app = express();
 
+const allowedOrigins = process.env.CLIENT_URL
+    ? process.env.CLIENT_URL.split(',').map(o => o.trim())
+    : ['https://marsbestech.com', 'https://www.marsbestech.com'];
+
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'https://marsbestech.com',
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g. mobile apps, curl, Postman)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        callback(new Error(`CORS: origin '${origin}' not allowed`));
+    },
     credentials: true
 }));
 
