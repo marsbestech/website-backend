@@ -19,7 +19,8 @@ app.get('/', (req, res) => {
     res.json({ status: 'ok', message: 'Marsbes Tech API is running' });
 });
 app.get('/version-test', (req, res) => {
-    res.send('NEW VERSION LIVE');
+    res.json({ status: 'ok', message: 'version updated' });
+
 });
 // API routes
 app.use('/api', apiRoutes);
