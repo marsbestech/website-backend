@@ -6,9 +6,12 @@ const apiRoutes = require('./routes/index');
 
 const app = express();
 
-const allowedOrigins = process.env.CLIENT_URL
+// Always allow both bare domain and www — merge env var list with hardcoded pair
+const baseOrigins = ['https://marsbestech.com', 'https://www.marsbestech.com'];
+const envOrigins = process.env.CLIENT_URL
     ? process.env.CLIENT_URL.split(',').map(o => o.trim())
-    : ['https://marsbestech.com', 'https://www.marsbestech.com'];
+    : [];
+const allowedOrigins = Array.from(new Set([...baseOrigins, ...envOrigins]));
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -17,6 +20,7 @@ app.use(cors({
         if (allowedOrigins.includes(origin)) {
             return callback(null, true);
         }
+        console.warn(`CORS blocked: ${origin}`);
         callback(new Error(`CORS: origin '${origin}' not allowed`));
     },
     credentials: true
