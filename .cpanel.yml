@@ -1,6 +1,0 @@
----
-deployment:
-  tasks:
-    - rm -rf /home/marsbewk/website-backend/tmp
-    - mkdir -p /home/marsbewk/website-backend/tmp
-    - touch /home/marsbewk/website-backend/tmp/restart.txt

@@ -8,6 +8,9 @@ const postRoutes = require('./post.routes');
 router.get('/', (req, res) => {
     res.json({ message: 'API is running' });
 });
+app.get('/version-test', (req, res) => {
+    res.send('NEW VERSION LIVE');
+});
 
 // Mount modular routes
 router.use('/', authRoutes); // mounts /api/login
