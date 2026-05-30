@@ -18,7 +18,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/', (req, res) => {
     res.json({ status: 'ok', message: 'Marsbes Tech API is running' });
 });
-
+app.get('/version-test', (req, res) => {
+    res.send('NEW VERSION LIVE');
+});
 // API routes
 app.use('/api', apiRoutes);
 
