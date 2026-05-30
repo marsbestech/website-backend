@@ -40,4 +40,13 @@ const registerUser = async (username, password) => {
     return { message: 'User created successfully', user: result.rows[0] };
 };
 
-module.exports = { loginUser, registerUser };
+const getAllUsers = async () => {
+    try {
+        const result = await db.query(`SELECT id, username FROM users ORDER BY id ASC`);
+        return result.rows;
+    } catch (err) {
+        throw err;
+    }
+};
+
+module.exports = { loginUser, registerUser, getAllUsers };
