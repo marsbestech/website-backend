@@ -33,6 +33,15 @@ pool.connect(async (err, client, release) => {
             "readTime" VARCHAR(100),
             "imageUrl" VARCHAR(255)
         )`);
+
+        await client.query(`CREATE TABLE IF NOT EXISTS contacts (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            subject VARCHAR(255) NOT NULL,
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )`);
     } catch (err) {
         console.error('Error creating tables', err.stack);
     } finally {
