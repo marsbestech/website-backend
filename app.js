@@ -45,7 +45,7 @@ app.use(express.static(frontendPath));
 // SPA catch-all: for any route not matched by API or a static file,
 // serve index.html so React Router handles navigation client-side.
 // This fixes the 404 on direct URL access / page refresh.
-app.get('*', (req, res) => {
+app.get('/*path', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
